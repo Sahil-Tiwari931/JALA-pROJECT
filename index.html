@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etherea Beauty Haven - Kolkata | Timeless Elegance</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        /* --- Global Styles & Variables --- */
+        :root {
+            --soft-pink: #FADADD;
+            --pale-pink: #F8E8E8;
+            --cream: #FFF8F0;
+            --gold: #B08D57;
+            --bright-gold: #C4A661;
+            --dark-grey: #4A4A4A;
+            --white: #FFFFFF;
+            --heading-font: 'Playfair Display', serif;
+            --body-font: 'Montserrat', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; font-size: 16px; }
+        body {
+            font-family: var(--body-font);
+            line-height: 1.6;
+            color: var(--dark-grey);
+            background-color: var(--cream);
+            overflow-x: hidden;
+        }
+        body.lightbox-open { overflow: hidden; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; width: 100%; }
+        h1, h2, h3 { font-family: var(--heading-font); color: var(--gold); margin-bottom: 0.8em; line-height: 1.3; }
+        h1 { font-size: 3rem; }
+        h2 { font-size: 2.2rem; text-align: center; margin-bottom: 1.5em; }
+        h3 { font-size: 1.4rem; color: var(--gold); }
+        p { margin-bottom: 1em; }
+        a { text-decoration: none; color: var(--gold); transition: color 0.3s ease; }
+        a:hover { color: var(--bright-gold); }
+        img { max-width: 100%; height: auto; display: block; }
+        .content-section { padding: 60px 0; }
+        .alt-bg { background-color: var(--pale-pink); }
+
+        /* --- CTA Button --- */
+        .cta-button { display: inline-block; background-color: var(--gold); color: var(--white); padding: 12px 25px; border-radius: 25px; font-family: var(--body-font); font-weight: bold; text-transform: uppercase; letter-spacing: 1px; border: none; cursor: pointer; transition: background-color 0.3s ease, transform 0.2s ease; text-align: center; font-size: 0.9rem; }
+        .cta-button:hover { background-color: var(--bright-gold); color: var(--white); transform: translateY(-2px); }
+
+        /* --- Header --- */
+        #main-header { background-color: rgba(255, 248, 240, 0.95); position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; padding: 10px 0; box-shadow: 0 2px 5px rgba(0,0,0,0.05); transition: background-color 0.3s ease, padding 0.3s ease; }
+        #main-header.scrolled { background-color: var(--cream); box-shadow: 0 3px 8px rgba(0,0,0,0.1); padding: 8px 0; }
+        #main-header .container { display: flex; justify-content: space-between; align-items: center; }
+        .logo a { font-family: var(--heading-font); font-size: 1.6rem; font-weight: bold; color: var(--gold); font-style: italic; }
+        .main-nav { display: block; }
+        .main-nav ul { list-style: none; display: flex; }
+        .main-nav li { margin-left: 20px; }
+        .main-nav a { color: var(--dark-grey); font-weight: bold; padding-bottom: 5px; position: relative; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.5px; }
+        .main-nav a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background-color: var(--gold); transition: width 0.3s ease; }
+        .main-nav a:hover::after, .main-nav a.active::after { width: 100%; }
+        .nav-button { padding: 8px 18px; font-size: 0.85rem; margin-left: 15px; }
+        #mobile-menu-toggle { display: none; background: none; border: none; cursor: pointer; padding: 10px; z-index: 1010; }
+        #mobile-menu-toggle span { display: block; width: 25px; height: 3px; background-color: var(--gold); margin: 5px 0; transition: all 0.3s ease-in-out; }
+        #mobile-menu-toggle.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+        #mobile-menu-toggle.active span:nth-child(2) { opacity: 0; }
+        #mobile-menu-toggle.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+        /* --- Hero Section --- */
+        #hero { background: url('images/hero-background.jpg') no-repeat center center/cover; min-height: 90vh; display: flex; justify-content: center; align-items: center; text-align: center; position: relative; color: var(--white); padding: 60px 20px; }
+        #hero::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.35); }
+        .hero-content { position: relative; z-index: 1; max-width: 800px; }
+        .hero-content h1 { color: var(--white); text-shadow: 2px 2px 4px rgba(0,0,0,0.5); font-size: 3.2rem; margin-bottom: 0.5em; }
+        .hero-content p { font-size: 1.1rem; margin-bottom: 1.5em; text-shadow: 1px 1px 3px rgba(0,0,0,0.4); max-width: 600px; margin-left: auto; margin-right: auto; }
+        .hero-button { padding: 14px 30px; font-size: 1rem; }
+
+        /* --- Services Section --- */
+        .services-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 25px; text-align: center; }
+        .service-item { background: var(--white); padding: 25px 15px; border-radius: 8px; box-shadow: 0 4px 15px rgba(176, 141, 87, 0.08); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .service-item:hover { transform: translateY(-5px); box-shadow: 0 6px 20px rgba(176, 141, 87, 0.12); }
+        .service-icon { width: 50px; height: 50px; margin: 0 auto 15px auto; }
+        .service-item h3 { margin-bottom: 0.5em; font-size: 1.3rem; }
+        .service-item p { font-size: 0.9rem; }
+
+        /* --- Image Gallery Section --- */
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
+        .gallery-item img { border-radius: 5px; transition: transform 0.3s ease, opacity 0.3s ease; cursor: pointer; aspect-ratio: 1 / 1; object-fit: cover; width: 100%; }
+        .gallery-item img:hover { opacity: 0.85; transform: scale(1.03); }
+
+        /* --- Testimonials Section --- */
+        .testimonial-slider { max-width: 750px; margin: 0 auto; padding: 0 50px; position: relative; overflow: hidden; }
+        .swiper-slide { background: var(--white); padding: 30px 35px; border-radius: 8px; text-align: center; box-shadow: 0 4px 15px rgba(176, 141, 87, 0.08); min-height: 180px; display: flex; flex-direction: column; justify-content: center; opacity: 0.5; transition: opacity 0.5s ease, box-shadow 0.5s ease; }
+        .swiper-slide-active { opacity: 1; box-shadow: 0 6px 20px rgba(176, 141, 87, 0.15); }
+        .testimonial-quote { font-style: italic; font-size: 1rem; margin-bottom: 1em; color: var(--dark-grey); position: relative; padding: 0 10px; }
+        .testimonial-quote::before, .testimonial-quote::after { font-family: var(--heading-font); color: var(--soft-pink); font-size: 2rem; position: absolute; line-height: 1; }
+        .testimonial-quote::before { content: '“'; left: -5px; top: -10px; }
+        .testimonial-quote::after { content: '”'; right: -5px; bottom: -15px; }
+        .customer-name { font-weight: bold; color: var(--gold); margin-top: 10px; font-family: var(--heading-font); font-size: 1rem; }
+        .swiper-pagination { position: relative; bottom: -10px !important; margin-top: 20px; }
+        .swiper-pagination-bullet { background-color: var(--soft-pink); opacity: 0.7; width: 10px; height: 10px; margin: 0 5px !important; }
+        .swiper-pagination-bullet-active { background-color: var(--gold); opacity: 1; }
+        .swiper-button-next, .swiper-button-prev { color: var(--gold); transition: color 0.3s ease; top: 50%; transform: translateY(-50%); width: calc(var(--swiper-navigation-size) / 44 * 27); height: var(--swiper-navigation-size); margin-top: -22px; }
+        .swiper-button-next:hover, .swiper-button-prev:hover { color: var(--bright-gold); }
+        .swiper-button-next::after, .swiper-button-prev::after { font-size: 1.6rem; }
+
+        /* --- Contact Section --- */
+        #contact { text-align: center; }
+        .contact-details { margin: 30px 0; line-height: 1.8; }
+        .contact-details p { margin-bottom: 0.5em; font-size: 0.95rem; }
+        .contact-button { margin-top: 20px; }
+
+        /* --- Footer --- */
+        footer { background-color: var(--pale-pink); color: var(--dark-grey); padding: 40px 0 20px 0; margin-top: 40px; }
+        .footer-content { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; margin-bottom: 30px; }
+        .footer-col { flex: 1; min-width: 180px; margin-bottom: 20px; }
+        .footer-col h4 { font-family: var(--heading-font); color: var(--gold); margin-bottom: 15px; font-size: 1.1rem; }
+        .footer-col ul { list-style: none; }
+        .footer-col li { margin-bottom: 8px; }
+        .footer-col a { color: var(--dark-grey); font-size: 0.9rem; }
+        .footer-col a:hover { color: var(--gold); }
+
+        /* CHANGE: Updated Social Icon Styles */
+        .social-icons a {
+            display: inline-block;
+            margin: 0 8px; /* Adjusted spacing */
+            margin-bottom: 5px;
+        }
+        .social-icons i { /* Style Font Awesome icons */
+            font-size: 1.6rem; /* Icon size */
+            color: var(--dark-grey);
+            transition: color 0.3s ease;
+            vertical-align: middle;
+        }
+        .social-icons a:hover i { /* Icon hover color */
+            color: var(--gold);
+        }
+        /* Removed old .social-icons img styles */
+
+        .footer-bottom { text-align: center; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--soft-pink); font-size: 0.85rem; }
+
+        /* --- Scroll Animations --- */
+        .fade-in-hidden { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+        .fade-in-visible { opacity: 1; transform: translateY(0); }
+
+        /* --- Lightbox Styles --- */
+        .lightbox { display: none; position: fixed; z-index: 1100; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0, 0, 0, 0.85); justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: opacity 0.4s ease, visibility 0s linear 0.4s; }
+        .lightbox.active { display: flex; visibility: visible; opacity: 1; transition: opacity 0.4s ease; }
+        .lightbox-content { margin: auto; display: block; max-width: 85%; max-height: 85vh; width: auto; height: auto; animation: zoomIn 0.4s ease; }
+        @keyframes zoomIn { from { transform: scale(0.8); opacity: 0;} to { transform: scale(1); opacity: 1;} }
+        .lightbox-close { position: absolute; top: 20px; right: 35px; color: #f1f1f1; font-size: 40px; font-weight: bold; transition: 0.3s; cursor: pointer; line-height: 1; }
+        .lightbox-close:hover, .lightbox-close:focus { color: #bbb; text-decoration: none; }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 992px) { /* Tablet */
+            h1 { font-size: 2.8rem; } h2 { font-size: 2rem; } .hero-content h1 { font-size: 3rem; } .hero-content p { font-size: 1rem; } .gallery-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); } .testimonial-slider { padding: 0 40px; }
+        }
+        @media (max-width: 768px) { /* Mobile */
+            html { font-size: 15px; } h1 { font-size: 2.2rem; } h2 { font-size: 1.8rem; } .hero-content h1 { font-size: 2.5rem; }
+            #main-header .container { flex-direction: row; } #mobile-menu-toggle { display: block; }
+            .main-nav { display: none; position: absolute; top: 100%; left: 0; width: 100%; background-color: rgba(255, 248, 240, 0.98); box-shadow: 0 5px 10px rgba(0,0,0,0.1); padding-top: 10px; padding-bottom: 10px; }
+            .main-nav.mobile-nav-active { display: block; } .main-nav ul { flex-direction: column; width: 100%; } .main-nav li { margin: 0; width: 100%; border-bottom: 1px solid var(--pale-pink); } .main-nav li:last-child { border-bottom: none; } .main-nav a { display: block; padding: 15px 20px; text-align: center; width: 100%; font-size: 1rem; } .main-nav a::after { display: none; } .main-nav a:hover { background-color: var(--pale-pink); } .nav-button { display: none; }
+            .services-container { grid-template-columns: 1fr; } .gallery-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; } .testimonial-slider { padding: 0 15px; } .swiper-button-next, .swiper-button-prev { transform: scale(0.8) translateY(-50%); } .swiper-button-next { right: 5px; } .swiper-button-prev { left: 5px; }
+            .footer-content { flex-direction: column; text-align: center; } .footer-col { margin-bottom: 20px; min-width: unset; } .social-icons { justify-content: center; }
+            .lightbox-close { font-size: 30px; top: 15px; right: 20px; } .lightbox-content { max-width: 90%; max-height: 80vh; }
+        }
+        @media (max-width: 480px) { /* Small Mobile */
+            html { font-size: 14px; } h1 { font-size: 2rem; } h2 { font-size: 1.6rem; } .hero-content h1 { font-size: 2rem; } .hero-content p { font-size: 0.9rem; } .cta-button { padding: 10px 20px; font-size: 0.85rem; } .hero-button { padding: 12px 25px; font-size: 0.9rem; } .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 5px; } .swiper-slide { padding: 20px 25px; } .testimonial-quote { font-size: 0.9rem; } .swiper-button-next, .swiper-button-prev { display: none; } .testimonial-slider { padding: 0 5px; } .swiper-pagination { margin-top: 10px; bottom: -5px !important;}
+             /* Ensure social icons have enough spacing */
+            .social-icons a { margin: 0 10px; }
+            .social-icons i { font-size: 1.8rem; } /* Slightly larger icons on mobile might look good */
+        }
+
+    </style>
+</head>
+<body>
+
+    <header id="main-header">
+        <div class="container">
+            <div class="logo"><a href="#">Etherea Beauty</a></div>
+            <button id="mobile-menu-toggle" aria-label="Toggle Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+            <nav class="main-nav" id="main-navigation">
+                <ul>
+                    <li><a href="#hero">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#gallery">Gallery</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+             <a href="#contact" class="cta-button nav-button">Book Now</a>
+        </div>
+    </header>
+
+    <section id="hero">
+        <div class="hero-content">
+            <h1>Discover Your Timeless Radiance</h1>
+            <p>Indulge in bespoke treatments designed to rejuvenate your body and soul in our warm, elegant sanctuary in Kolkata.</p>
+            <a href="#contact" class="cta-button hero-button">Book Your Appointment</a>
+        </div>
+    </section>
+
+    <section id="about" class="content-section">
+        <div class="container fade-in-hidden">
+             <h2>Welcome to Etherea</h2>
+             <p>Experience a sanctuary where timeless beauty techniques meet modern luxury. Our philosophy centers around enhancing your natural glow in a warm, elegant, and inviting atmosphere, using only the finest products and personalized care.</p>
+        </div>
+    </section>
+
+    <section id="services" class="content-section alt-bg">
+        <div class="container">
+            <h2>Our Signature Services</h2>
+            <div class="services-container">
+                <div class="service-item fade-in-hidden">
+                    <img src="images/icon-facial.png" alt="Facial Icon" class="service-icon">
+                    <h3>Rejuvenating Facials</h3><p>Tailored skincare treatments.</p>
+                </div>
+                <div class="service-item fade-in-hidden">
+                    <img src="images/icon-massage.png" alt="Massage Icon" class="service-icon">
+                    <h3>Relaxing Massages</h3><p>Unwind and de-stress.</p>
+                </div>
+                <div class="service-item fade-in-hidden">
+                    <img src="images/icon-nails.png" alt="Nail Care Icon" class="service-icon">
+                    <h3>Elegant Nail Care</h3><p>Perfect manicures & pedicures.</p>
+                </div>
+                 <div class="service-item fade-in-hidden">
+                    <img src="images/icon-hair.png" alt="Hair Styling Icon" class="service-icon">
+                    <h3>Stylish Hair Design</h3><p>Classic cuts to modern styling.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery" class="content-section">
+        <div class="container">
+            <h2>Glimpses of Etherea</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item fade-in-hidden"><img src="images/gallery-1.jpg" alt="Elegant salon reception area"></div>
+                <div class="gallery-item fade-in-hidden"><img src="images/gallery-2.jpg" alt="Comfortable pedicure station"></div>
+                <div class="gallery-item fade-in-hidden"><img src="images/gallery-3.jpg" alt="Close-up of a flawless manicure"></div>
+                <div class="gallery-item fade-in-hidden"><img src="images/gallery-4.jpg" alt="Salon decor detail"></div>
+                <div class="gallery-item fade-in-hidden"><img src="images/gallery-5.jpg" alt="Client relaxing during treatment"></div>
+                <div class="gallery-item fade-in-hidden"><img src="images/gallery-6.jpg" alt="Premium beauty products"></div>
+                <div class="gallery-item fade-in-hidden"><img src="images/gallery-7.jpg" alt="Premium beauty products"></div>
+                <div class="gallery-item fade-in-hidden"><img src="images/gallery-8.jpg" alt="Premium beauty products"></div>
+                <div class="gallery-item fade-in-hidden"><img src="images/gallery-9.jpg" alt="Premium beauty products"></div>
+                <div class="gallery-item fade-in-hidden"><img src="images/gallery-10.jpg" alt="Premium beauty products"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials" class="content-section alt-bg">
+        <div class="container">
+            <h2>Words From Our Guests</h2>
+            <div class="swiper-container testimonial-slider fade-in-hidden">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide"><blockquote class="testimonial-quote">"Wonderful experience! Relaxing and professional. My skin feels amazing. A true gem in Kolkata."</blockquote><p class="customer-name">- Sarah L.</p></div>
+                    <div class="swiper-slide"><blockquote class="testimonial-quote">"Calming and beautiful atmosphere. Incredible attention to detail. Always leave feeling pampered."</blockquote><p class="customer-name">- Jessica M.</p></div>
+                    <div class="swiper-slide"><blockquote class="testimonial-quote">"Felt welcomed instantly. Stunning decor, top-notch service!"</blockquote><p class="customer-name">- Emily R.</p></div>
+                    <div class="swiper-slide"><blockquote class="testimonial-quote">"Found my new favourite salon! Elegant, clean, fantastic results. Highly recommend the facial."</blockquote><p class="customer-name">- Priya K.</p></div>
+                </div>
+                <div class="swiper-pagination"></div><div class="swiper-button-prev"></div><div class="swiper-button-next"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="content-section">
+         <div class="container fade-in-hidden">
+            <h2>Get In Touch or Book Online</h2>
+            <p>We'd love to welcome you. Contact us for inquiries or use our simple online system to book your escape today.</p>
+             <div class="contact-details">
+                <p><strong>Phone:</strong> <a href="tel:+919876543210">+91 98765 43210</a></p>
+                <p><strong>Email:</strong> <a href="mailto:appointments@ethereabeauty.in">appointments@ethereabeauty.in</a></p>
+                <p><strong>Address:</strong> 123 Elegance Street, Park Street Area, Kolkata, West Bengal 700016</p>
+                <p><strong>Hours:</strong> Tue - Sun: 10:00 AM - 7:00 PM (Mon Closed)</p>
+             </div>
+             <!-- <a href="#" class="cta-button contact-button" target="_blank" rel="noopener noreferrer">Book Online Now</a> -->
+         </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <h4>Etherea Beauty</h4>
+                    <p>Your sanctuary for beauty & serenity in Kolkata.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#gallery">Gallery</a></li>
+                        <li><a href="#contact">Contact & Book</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Connect</h4>
+                    <div class="social-icons">
+                        <a href="#" aria-label="Facebook" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="YouTube" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i></a>
+                        </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="current-year"></span> Etherea Beauty Haven. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="lightbox-modal" class="lightbox">
+        <span class="lightbox-close" aria-label="Close image view">&times;</span>
+        <img class="lightbox-content" id="lightbox-image" src="" alt="Large gallery image view">
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            // Sticky Header
+            const header = document.getElementById('main-header');
+            if (header) {
+                const stickyOffset = header.offsetTop > 0 ? header.offsetTop : 60;
+                window.addEventListener('scroll', function() { header.classList.toggle("scrolled", window.pageYOffset > stickyOffset); }, { passive: true });
+            } else { console.warn("Header element not found."); }
+
+            // Mobile Nav Toggle
+            const menuToggle = document.getElementById('mobile-menu-toggle');
+            const mainNav = document.getElementById('main-navigation');
+            if (menuToggle && mainNav) {
+                menuToggle.addEventListener('click', () => {
+                    const isExpanded = mainNav.classList.toggle('mobile-nav-active');
+                    menuToggle.classList.toggle('active');
+                    menuToggle.setAttribute('aria-expanded', isExpanded);
+                });
+                mainNav.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        if (mainNav.classList.contains('mobile-nav-active')) {
+                            mainNav.classList.remove('mobile-nav-active');
+                            menuToggle.classList.remove('active');
+                            menuToggle.setAttribute('aria-expanded', 'false');
+                        }
+                    });
+                });
+            } else { console.warn("Mobile menu elements not found."); }
+
+            // Testimonial Slider
+            if (typeof Swiper !== 'undefined') {
+                try {
+                    new Swiper('.testimonial-slider', {
+                        loop: true, autoplay: { delay: 5500, disableOnInteraction: true }, slidesPerView: 1, spaceBetween: 30, grabCursor: true,
+                        pagination: { el: '.swiper-pagination', clickable: true }, navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }, watchSlidesProgress: true,
+                    });
+                } catch (e) { console.error("Swiper init failed:", e); }
+            } else { console.warn("Swiper library not found."); }
+
+            // Footer Year
+            const yearSpan = document.getElementById('current-year');
+            if (yearSpan) { yearSpan.textContent = new Date().getFullYear(); }
+
+            // Scroll Animations
+            const animatedElements = document.querySelectorAll('.fade-in-hidden');
+            if ("IntersectionObserver" in window) {
+                const observer = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('fade-in-visible'); entry.target.classList.remove('fade-in-hidden'); observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.1 });
+                animatedElements.forEach(el => { observer.observe(el); });
+            } else { animatedElements.forEach(el => { el.classList.remove('fade-in-hidden'); el.classList.add('fade-in-visible'); }); }
+
+            // Lightbox
+            const lightboxModal = document.getElementById('lightbox-modal');
+            const lightboxImage = document.getElementById('lightbox-image');
+            const closeButton = document.querySelector('.lightbox-close');
+            const galleryImages = document.querySelectorAll('.gallery-item img');
+            if (lightboxModal && lightboxImage && closeButton && galleryImages.length > 0) {
+                const openLightbox = (imgSrc, imgAlt) => { lightboxImage.src = imgSrc; lightboxImage.alt = imgAlt; lightboxModal.classList.add('active'); document.body.classList.add('lightbox-open'); };
+                const closeLightbox = () => { lightboxModal.classList.remove('active'); document.body.classList.remove('lightbox-open'); setTimeout(() => { lightboxImage.src = ""; lightboxImage.alt = ""; }, 400); };
+                galleryImages.forEach(image => { image.addEventListener('click', (e) => { e.preventDefault(); openLightbox(image.src, image.alt); }); });
+                closeButton.addEventListener('click', closeLightbox);
+                lightboxModal.addEventListener('click', (e) => { if (e.target === lightboxModal) { closeLightbox(); } });
+                document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && lightboxModal.classList.contains('active')) { closeLightbox(); } });
+            } else { console.warn("Lightbox elements not found."); }
+
+        });
+    </script>
+
+</body>
+</html>
