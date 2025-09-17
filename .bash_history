@@ -1,0 +1,3 @@
+clea
+clear
+sudo su
