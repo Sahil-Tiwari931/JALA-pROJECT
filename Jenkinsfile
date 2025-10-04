@@ -1,67 +1,79 @@
 pipeline {
     agent any
-
+    // triggers{
+    //     pollSCM('* * * * *')
+    // }
     environment {
-        AWS_REGION = "ap-south-1"
-        AWS_ACCOUNT_ID = "183071452284"
-        IMAGE_NAME = "jala"
-        IMAGE_TAG = "latest"
-        ECR_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${IMAGE_NAME}"
+        AWS_ACCOUNT_ID = '183071452284'
+        AWS_REGION = 'eu-north-1'
+        ECR_REPO_NAME = jala-project-1'
+        IMAGE_TAG = 'latest'  // You can dynamically set the build version
+        ECR_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPO_NAME}:${IMAGE_TAG}"
+        EMAIL = "Vershitiwari0@gmail.com"
     }
 
     stages {
-        stage('Login to AWS ECR') {
+        stage('Checkout Code') {
             steps {
-                sh '''
-                aws ecr get-login-password --region $AWS_REGION | \
-                docker login --username AWS --password-stdin $ECR_URI
-                '''
+                checkout scm
             }
         }
 
-        stage('Clone GitHub Repo') {
+        stage('Login to ECR') {
             steps {
-                sh 'git clone https://github.com/Sahil-Tiwari931/JALA-pROJECT.git'
+                sh '''
+                aws ecr get-login-password --region $AWS_REGION | \
+                docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
+                '''
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t $IMAGE_NAME:$IMAGE_TAG DockerProject/'
-            }
-        }
-
-        stage('Push to ECR') {
-            steps {
                 sh '''
-                docker tag $IMAGE_NAME:$IMAGE_TAG $ECR_URI:$IMAGE_TAG
-                docker push $ECR_URI:$IMAGE_TAG
+                docker build -t $ECR_REPO_NAME .
                 '''
             }
         }
 
-        stage('Run Docker Image') {
+        stage('Tag Docker Image') {
             steps {
-                sh 'docker run -d -p 8090:80 $ECR_URI:$IMAGE_TAG'
+                sh '''
+                docker tag $ECR_REPO_NAME:$IMAGE_TAG $ECR_URI
+                '''
+            }
+        }
+
+        stage('Push Image to ECR') {
+            steps {
+                sh '''
+                docker push $ECR_URI
+                '''
+            }
+        }
+
+        stage('Run Docker Container') {
+            steps {
+                sh '''
+                docker pull $ECR_URI
+                docker stop app || true
+                docker rm app || true
+                docker run -d --name app -p 8000:80 $ECR_URI
+                '''
             }
         }
     }
 
     post {
         success {
-            echo '✅ Deployment successful!'
-            mail to: 'Vershitiwari0@gmail.com',
-                 subject: 'Jenkins Job Success',
-                 body: 'Your Docker image was successfully built and deployed to AWS ECR.'
+            mail to: "${EMAIL}",
+                 subject: "Job '${env.JOB_NAME}' #${env.BUILD_NUMBER} Succeeded",
+                 body: "Good news! The Jenkins job succeeded."
         }
         failure {
-            echo '❌ Deployment failed!'
-            mail to: 'Vershitiwari0@gmail.com',
-                 subject: 'Jenkins Job Failed',
-                 body: 'Something went wrong during the pipeline execution. Please check the logs.'
+            mail to: "${EMAIL}",
+                 subject: "Job '${env.JOB_NAME}' #${env.BUILD_NUMBER} Failed",
+                 body: "Unfortunately, the Jenkins job failed. Please check the logs."
         }
     }
 }
-
-
-
