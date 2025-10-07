@@ -66,7 +66,7 @@ pipeline {
                 docker rm app || true
                 
                 # Run the container
-                docker run -d --name app -p 8000:80 $ECR_URI
+                docker run -d --name app -p 8090:80 $ECR_URI
             '''
         }
 }
@@ -75,12 +75,12 @@ pipeline {
 
     post {
         success {
-            mail to: "${EMAIL}",
+            mail to: "${Vershitiwari0@gmail.com}",
                  subject: "Job '${env.JOB_NAME}' #${env.BUILD_NUMBER} Succeeded",
                  body: "Good news! The Jenkins job succeeded."
         }
         failure {
-            mail to: "${EMAIL}",
+            mail to: "${Vershitiwari0@gmail.com}",
                  subject: "Job '${env.JOB_NAME}' #${env.BUILD_NUMBER} Failed",
                  body: "Unfortunately, the Jenkins job failed. Please check the logs."
         }
